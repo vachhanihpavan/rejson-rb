@@ -4,3 +4,15 @@ cache: bundler
 rvm:
   - 2.6.3
 before_install: gem install bundler -v 2.1.2
+
+install:
+  # Get Redis
+  - git clone --depth=1 https://github.com/antirez/redis.git && cd redis && make && cd ..
+  # Get ReJSON
+  - git clone --depth=1 https://github.com/RedisLabsModules/ReJSON.git && cd ReJSON && make && cd ..
+
+before_script:
+  - ./redis/src/redis-server --loadmodule ReJSON/src/rejson.so &
+
+script:
+  - bundle exec rspec

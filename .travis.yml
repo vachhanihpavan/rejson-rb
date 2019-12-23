@@ -13,6 +13,7 @@ install:
 
 before_script:
   - ./redis/src/redis-server --loadmodule ReJSON/src/rejson.so &
+  - bundle install
 
 script:
-  - bundle exec rspec
+  - rake

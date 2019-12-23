@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Redis JSON Ruby Adapter"
   spec.homepage      = "https://github.com/vachhanihpavan/rejson-rb"
   spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.0.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/vachhanihpavan/rejson-rb"

@@ -2,10 +2,10 @@
 language: ruby
 cache: bundler
 rvm:
-  - 2.0.0
+  - 2.3.0
   - 2.5.5
   - 2.6.3
-before_install: gem install bundler -v 2.1.2
+before_install: gem install bundler -v 2.0.0
 
 install:
   # Get Redis

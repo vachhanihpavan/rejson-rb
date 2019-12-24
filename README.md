@@ -18,11 +18,35 @@ Or install it yourself as:
 
     $ gem install rejson-rb
 
+## Usage
+
+Make sure you have loaded rejson module in `redis.conf`
+```ruby
+require 'rejson'
+
+rcl = Redis.new # Get a redis client
+
+# Get/Set keys
+rcl.json_set "test", ".", "{:foo => 'bar', :baz => 'qux'}"
+# => "OK" 
+rcl.json_get "test", Rejson::Path.root_path
+# => "{:foo => 'bar', :baz => 'qux'}" 
+rcl.json_del "test"
+# => 0 
+
+# Use similar to redis-rb client
+rj = rcl.pipelined do
+  rcl.set "foo", "bar"
+  rcl.json_set "test", ".", "{:foo => 'bar', :baz => 'qux'}"
+end
+# => ["OK", "OK"] 
+```
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/vachhanihpavan/rejson-rb. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/vachhanihpavan/rejson-rb/blob/master/CODE_OF_CONDUCT.md).
 
 For complete documentation about ReJSON's commands, refer to ReJSON's website.
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

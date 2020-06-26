@@ -6,11 +6,12 @@ cache: bundler
 rvm:
   - 2.5.5
   - 2.6.3
+  - ruby-head
 
 before_install:
   - gem install bundler -v 2.0.0
-  - docker pull redislabs/rejson:latest
-  - docker run -d -p 6379:6379 redislabs/rejson
+  - docker pull redislabs/rejson:edge
+  - docker run -d -p 6379:6379 redislabs/rejson:edge
 
 install:
   # Install dependency gems

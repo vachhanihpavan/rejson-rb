@@ -312,8 +312,9 @@ describe "Test ReJSON" do
     end
 
     it "return null on popping null array" do
-      popped = @rcl.json_arrpop "null", ".arr", 5
-      popped.should eq ""
+      expect do
+        @rcl.json_arrpop "null", ".arr", 5
+      end.to(raise_error Redis::CommandError)
     end
 
     it "should trim array" do

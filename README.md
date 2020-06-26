@@ -26,13 +26,26 @@ require 'rejson'
 
 rcl = Redis.new # Get a redis client
 
-# Get/Set keys
-rcl.json_set "test", ".", "{:foo => 'bar', :baz => 'qux'}"
+# Get/Set/Delete keys
+obj = {
+        'foo': 42,
+        'arr': [nil, true, 3.14],
+        'truth': {
+          'coord': "out there"
+        }
+      }
+
+rcl.json_set("root", Rejson::Path.root_path, obj)
 # => "OK" 
-rcl.json_get "test", Rejson::Path.root_path
-# => "{:foo => 'bar', :baz => 'qux'}" 
-rcl.json_del "test"
-# => 0 
+
+rcl.json_set("root", Rejson::Path.new(".foo"), 56)
+# => "OK" 
+
+rcl.json_get "root", Rejson::Path.root_path
+# => {"foo"=>56, "arr"=>[nil, true, 3.14], "truth"=>{"coord"=>"out there"}}
+
+rcl.json_del "root", ".truth.coord"
+# => 1
 
 # Use similar to redis-rb client
 rj = rcl.pipelined do
@@ -41,6 +54,9 @@ rj = rcl.pipelined do
 end
 # => ["OK", "OK"] 
 ```
+
+Path to JSON can be passed as `Rejson::Path.new("<path>")` or `Rejson::Path.root_path`. `<path>` syntax can be as mentioned [here](https://oss.redislabs.com/redisjson/path).
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/vachhanihpavan/rejson-rb. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/vachhanihpavan/rejson-rb/blob/master/CODE_OF_CONDUCT.md).
@@ -53,4 +69,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Rejson::Rb project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/vachhanihpavan/rejson-rb/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Rejson project's codebase, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/vachhanihpavan/rejson-rb/blob/master/CODE_OF_CONDUCT.md).

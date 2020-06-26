@@ -5,6 +5,7 @@ require "json"
 
 # Extends Redis class to add JSON functions
 class Redis
+  # rubocop:disable Metrics/AbcSize
   def json_set(key, path, data, options = {})
     pieces = [key, str_path(path), json_encode(data)]
     options[:nx] ||= false if options.dig(:nx)
@@ -12,7 +13,7 @@ class Redis
     options[:xx] ||= false if options.dig(:xx)
 
     if options[:nx] && options[:xx]
-      raise Exception, "nx and xx are mutually exclusive: use one, the other or neither - but not both"
+      raise ArgumentError, "nx and xx are mutually exclusive: use one, the other or neither - but not both"
     elsif options[:nx]
       pieces.append("NX")
     elsif options[:xx]
@@ -21,6 +22,7 @@ class Redis
 
     call_client(:set, pieces)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def json_get(key, *args)
     pieces = [key]
@@ -43,26 +45,21 @@ class Redis
   def json_mget(key, *args)
     pieces = [key]
 
-    if args.empty?
-      raise ArgumentError "Invalid arguments"
-    else
-      pieces.append(args)
-    end
+    raise ArgumentError, "Invalid arguments: Missing path" if args.empty?
 
+    pieces.append(args)
     json_bulk_decode call_client(:mget, pieces)
   end
 
-  def json_del(key, *args)
-    pieces = [key]
-    pieces.append(str_path(args))
+  def json_del(key, path = Rejson::Path.root_path)
+    pieces = [key, str_path(path)]
     call_client(:del, pieces).to_i
   end
 
   alias json_forget json_del
 
-  def json_type(key, *args)
-    pieces = [key]
-    pieces.append(str_path(args))
+  def json_type(key, path = Rejson::Path.root_path)
+    pieces = [key, str_path(path)]
     call_client(:type, pieces).to_s
   end
 
@@ -137,11 +134,11 @@ class Redis
 
   private
 
-  def str_path(p)
-    if p.instance_of?(Rejson::Path)
-      p.str_path
+  def str_path(path)
+    if path.instance_of?(Rejson::Path)
+      path.str_path
     else
-      p
+      path
     end
   end
 

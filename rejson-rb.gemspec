@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["vachhanihpavan@gmail.com"]
 
   spec.summary       = "Redis JSON Ruby Client"
-  spec.description   = "rejson-rb is a package that allows storing, updating and querying objects as JSON documents in Redis database that is intended with RedisJSON module."
+  spec.description   = "rejson-rb is a package that allows storing, updating and querying objects as JSON documents
+                        in Redis database that is intended with RedisJSON module."
   spec.homepage      = "https://github.com/vachhanihpavan/rejson-rb"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
@@ -27,9 +28,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "redis",        "~> 4.2.1"
-  spec.add_runtime_dependency "json",         "~> 2.0"
-  spec.add_development_dependency "bundler",  "~> 2.0"
-  spec.add_development_dependency "rspec",    "~> 3.0"
-  spec.add_development_dependency "simplecov","~> 0.17"
+  spec.add_runtime_dependency "json",          "~> 2.0"
+  spec.add_runtime_dependency "redis",         "~> 4.2.1"
+
+  spec.add_development_dependency "bundler",   "~> 2.0"
+  spec.add_development_dependency "rspec",     "~> 3.0"
+  spec.add_development_dependency "rubocop",   "=0.86.0"
+  spec.add_development_dependency "simplecov", "~> 0.17"
 end

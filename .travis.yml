@@ -10,7 +10,7 @@ rvm:
 
 before_install:
   - gem install bundler -v 2.0.0
-  - docker pull redislabs/rejson:latest
+  - docker pull redislabs/rejson:edge
   - docker run -d -p 6379:6379 redislabs/rejson
 
 install:

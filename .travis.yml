@@ -1,21 +1,22 @@
 ---
 language: ruby
+
+services: docker
 cache: bundler
 rvm:
   - 2.5.5
   - 2.6.3
-before_install: gem install bundler -v 2.0.0
+
+before_install:
+  - gem install bundler -v 2.0.0
+  - docker pull redislabs/rejson:latest
+  - docker run -d -p 6379:6379 redislabs/rejson
 
 install:
-  # Get Redis
-  - git clone --depth=1 https://github.com/antirez/redis.git && cd redis && make && cd ..
-  # Get ReJSON
-  - git clone --depth=1 https://github.com/RedisLabsModules/ReJSON.git && cd ReJSON && make && cd ..
   # Install dependency gems
   - bundle install
 
 before_script:
-  - ./redis/src/redis-server --loadmodule ReJSON/src/rejson.so &
   - bundle install
 
 script:

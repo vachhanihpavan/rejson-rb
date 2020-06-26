@@ -6,7 +6,11 @@ cache: bundler
 rvm:
   - 2.5.5
   - 2.6.3
-before_install: gem install bundler -v 2.0.0
+
+before_install:
+  - gem install bundler -v 2.0.0
+  - docker pull redislabs/rejson:latest
+  - docker run -d -p 6379:6379 redislabs/rejson
 
 install:
   # Install dependency gems

@@ -84,7 +84,9 @@ describe "Test ReJSON" do
         set.should eq "OK"
 
         foo = @rcl.json_get "foo", "."
-        expect(foo).to(match({ "arr" => [42, nil, -1.2, false, %w[sub array], { "subdict" => true }], "bool" => true, "dict" => { "a" => 1, "b" => "2", "c" => nil }, "int" => 42, "nil" => nil, "num" => 4.2, "string" => "string value" }))
+        expect(foo).to(match({ "arr" => [42, nil, -1.2, false, %w[sub array], { "subdict" => true }],
+                               "bool" => true, "dict" => { "a" => 1, "b" => "2", "c" => nil },
+                               "int" => 42, "nil" => nil, "num" => 4.2, "string" => "string value" }))
 
         set = @rcl.json_set "foo", Rejson::Path.root_path, @docs[:scalars]
         set.should eq "OK"
@@ -196,7 +198,7 @@ describe "Test ReJSON" do
 
     it "skips missing values" do
       foo = @rcl.json_mget "bar", "missing", "."
-      foo.should eq [{"name" => "John Doe"}, nil]
+      foo.should eq [{ "name" => "John Doe" }, nil]
     end
   end
 

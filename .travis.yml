@@ -20,4 +20,5 @@ before_script:
   - bundle install
 
 script:
+  - bundle exec rake rubocop
   - bundle exec rspec

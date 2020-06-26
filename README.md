@@ -57,6 +57,8 @@ end
 
 Path to JSON can be passed as `Rejson::Path.new("<path>")` or `Rejson::Path.root_path`. `<path>` syntax can be as mentioned [here](https://oss.redislabs.com/redisjson/path).
 
+### Refer project WIKI for more detailed documentation.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/vachhanihpavan/rejson-rb. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/vachhanihpavan/rejson-rb/blob/master/CODE_OF_CONDUCT.md).
@@ -69,4 +71,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Rejson project's codebase, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/vachhanihpavan/rejson-rb/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Rejson project's codebase, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/vachhanihpavan/rejson-rb/blob/master/CODE_OF_CONDUCT.md).#

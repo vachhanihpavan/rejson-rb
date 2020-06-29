@@ -1,4 +1,4 @@
-# RedisJSON Ruby Client [![Build Status](https://travis-ci.com/vachhanihpavan/rejson-rb.svg?token=x85KXUqPs5qJik1EzpyW&branch=master)](https://travis-ci.com/vachhanihpavan/rejson-rb)
+# RedisJSON Ruby Client [![Build Status](https://travis-ci.com/vachhanihpavan/rejson-rb.svg?token=x85KXUqPs5qJik1EzpyW&branch=master)](https://travis-ci.com/vachhanihpavan/rejson-rb)  [![Gem Version](https://badge.fury.io/rb/rejson-rb.svg)](https://badge.fury.io/rb/rejson-rb)
 
 rejson-rb is a package that allows storing, updating and querying objects as JSON documents in a [Redis](https://redis.io/) database that is extended with the [ReJSON](https://github.com/RedisJSON/RedisJSON) module. The package extends redis-rb's interface with ReJSON's API, and performs on-the-fly serialization/deserialization of objects to/from JSON.
 

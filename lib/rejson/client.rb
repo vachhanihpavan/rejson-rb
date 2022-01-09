@@ -58,63 +58,107 @@ class Redis
 
   alias json_forget json_del
 
-  def json_type(key, path = Rejson::Path.root_path)
+  def json_type(key, path = Rejson::Path.json_root_path)
     pieces = [key, str_path(path)]
-    call_client(:type, pieces).to_s
+    if(json_path?(str_path(path)))
+      call_client(:type, pieces).to_a
+    else
+      call_client(:type, pieces).to_s
+    end
   end
 
   def json_numincrby(key, path, number)
     pieces = [key, str_path(path), number]
-    call_client(:numincrby, pieces).to_i
+    if(json_path?(str_path(path)))
+      call_client(:numincrby, pieces).to_s
+    else
+      call_client(:numincrby, pieces).to_i
+    end
   end
 
   def json_nummultby(key, path, number)
     pieces = [key, str_path(path), number]
-    call_client(:nummultby, pieces).to_i
+    if(json_path?(str_path(path)))
+      call_client(:nummultby, pieces).to_s
+    else
+      call_client(:nummultby, pieces).to_i
+    end
   end
 
   def json_strappend(key, string, path = Rejson::Path.root_path)
     pieces = [key, str_path(path), json_encode(string)]
-    call_client(:strappend, pieces).to_i
+    if(json_path?(str_path(path)))
+      call_client(:strappend, pieces).to_a
+    else
+      call_client(:strappend, pieces).to_i
+    end
   end
 
   def json_strlen(key, path = Rejson::Path.root_path)
     pieces = [key, str_path(path)]
-    call_client(:strlen, pieces).to_i
+    if(json_path?(str_path(path)))
+      call_client(:strlen, pieces).to_a
+    else
+      call_client(:strlen, pieces).to_i
+    end
   end
 
   def json_arrappend(key, path, json, *args)
     json_objs = [json_encode(json)]
     args.each { |arg| json_objs.append(json_encode(arg)) }
     pieces = [key, str_path(path), json_objs]
-    call_client(:arrappend, pieces).to_i
+    if(json_path?(str_path(path)))
+      call_client(:arrappend, pieces).to_a
+    else
+      call_client(:arrappend, pieces).to_i
+    end
   end
 
   def json_arrindex(key, path, scalar, start = 0, stop = 0)
     pieces = [key, str_path(path), scalar, start, stop]
-    call_client(:arrindex, pieces).to_i
+    if(json_path?(str_path(path)))
+      call_client(:arrindex, pieces).to_a
+    else
+      call_client(:arrindex, pieces).to_i
+    end
   end
 
   def json_arrinsert(key, path, index, *args)
     json_objs = []
     args.each { |arg| json_objs.append(json_encode(arg)) }
     pieces = [key, str_path(path), index, json_objs]
-    call_client(:arrinsert, pieces).to_i
+    if(json_path?(str_path(path)))
+      call_client(:arrinsert, pieces).to_a
+    else
+      call_client(:arrinsert, pieces).to_i
+    end
   end
 
   def json_arrlen(key, path = Rejson::Path.root_path)
     pieces = [key, str_path(path)]
-    call_client(:arrlen, pieces).to_i
+    if(json_path?(str_path(path)))
+      call_client(:arrlen, pieces).to_a
+    else
+      call_client(:arrlen, pieces).to_i
+    end
   end
 
   def json_arrpop(key, path = Rejson::Path.root_path, index = -1)
     pieces = [key, str_path(path), index]
-    call_client(:arrpop, pieces).to_s
+    if(json_path?(str_path(path)))
+      call_client(:arrpop, pieces).to_a
+    else
+      call_client(:arrpop, pieces).to_s
+    end
   end
 
   def json_arrtrim(key, path, start, stop)
     pieces = [key, str_path(path), start, stop]
-    call_client(:arrtrim, pieces).to_i
+    if(json_path?(str_path(path)))
+      call_client(:arrtrim, pieces).to_a
+    else
+      call_client(:arrtrim, pieces).to_i
+    end
   end
 
   def json_objkeys(key, path = Rejson::Path.root_path)
@@ -124,7 +168,11 @@ class Redis
 
   def json_objlen(key, path = Rejson::Path.root_path)
     pieces = [key, str_path(path)]
-    call_client(:objlen, pieces).to_i
+    if(json_path?(str_path(path)))
+      call_client(:objlen, pieces).to_a
+    else  
+      call_client(:objlen, pieces)
+    end
   end
 
   def json_resp(key, path = Rejson::Path.root_path)
@@ -165,5 +213,13 @@ class Redis
   def call_client(cmd, pieces)
     pieces.prepend("JSON.#{cmd.upcase}").join(" ")
     @client.call pieces
+  end
+
+  def json_path?(str)
+    if(str[0] == '$')
+      return true
+    else
+      return false
+    end
   end
 end

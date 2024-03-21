@@ -10,6 +10,11 @@ module Rejson
       root
     end
 
+    def self.json_root_path
+      root = Path.new("$")
+      root
+    end
+
     def initialize(path)
       @str_path = path
     end
